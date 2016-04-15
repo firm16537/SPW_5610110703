@@ -8,9 +8,13 @@ public class Window{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 650);
 		frame.getContentPane().setLayout(new BorderLayout());
+		
 
 		GamePanel gp = new GamePanel();
 		SpaceShip s = new SpaceShip(180, 560, 20, 20);
+		GameEngine eg = new GameEngine(gp, s);
+		frame.addKeyListener(eg);
+
 
 		gp.sprites.add(s);
 		gp.updateGameUI();
@@ -18,6 +22,7 @@ public class Window{
 
 		frame.getContentPane().add(gp, BorderLayout.CENTER);
 		frame.setVisible(true);
+		eg.start();
 		
 	
 		
