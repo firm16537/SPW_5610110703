@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.JFrame;
 import java.util.ArrayList;
+import java.awt.BorderLayout;
 
 public class Window{
 	public static void main(String[] args){
@@ -14,10 +15,6 @@ public class Window{
 		SpaceShip s = new SpaceShip(180, 560, 20, 20);
 		GameEngine eg = new GameEngine(gp, s);
 		frame.addKeyListener(eg);
-
-
-		gp.sprites.add(s);
-		gp.updateGameUI();
 
 
 		frame.getContentPane().add(gp, BorderLayout.CENTER);
