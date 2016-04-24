@@ -16,8 +16,10 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private SpaceShip v;	
 	private Timer timer;
-	private double difficulty = 0.3;
+	private double difficulty = 0.1;
 	private long score = 0;
+
+	private int life = 3;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -69,7 +71,15 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
+				if(e.getClash() == true){
+				life--;
+				e.setClash(false);
+				}
+				if(life < 1){
 				die();
+				}
+
+
 				return;
 			}
 		}
@@ -92,6 +102,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+
+	public	int getLife(){
+		return life;
 	}
 
 

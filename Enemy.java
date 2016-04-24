@@ -8,6 +8,7 @@ public class Enemy extends Sprite{
 	
 	private int step = 12;
 	private boolean alive = true;
+	private boolean clash = true;
 	
 	public Enemy(int x, int y) {
 		super(x, y, 5, 10);
@@ -36,5 +37,13 @@ public class Enemy extends Sprite{
 	
 	public boolean isAlive(){
 		return alive;
+	}
+
+	public boolean getClash(){
+		return clash;			
+	}
+
+	public void setClash(boolean x){
+		clash = x;
 	}
 }
