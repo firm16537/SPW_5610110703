@@ -14,9 +14,11 @@ public class GameEngine implements KeyListener, GameReporter{
 	GamePanel gp;
 
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<Bonus> bonus = new ArrayList<Bonus>(); 
 	private SpaceShip v;	
 	private Timer timer;
-	private double difficulty = 0.1;
+	private double difficulty = 0.3;
+	private double bonusx = 0.01; // Set Bonus
 	private long score = 0;
 
 	private int life = 3;
@@ -46,11 +48,20 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
+
+	private void generateBonus(){ // bonus generate
+		Bonus b = new Bonus((int)(Math.random()*390), 30);
+		gp.sprites.add(b);
+		bonus.add(b);
+	}
 	
 	
 	private void process(){
 		if(Math.random() < difficulty){
 			generateEnemy();
+		}
+		if(Math.random() < bonusx){ // set bonus prop.
+			generateBonus();
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
@@ -83,6 +94,27 @@ public class GameEngine implements KeyListener, GameReporter{
 				return;
 			}
 		}
+
+		Iterator<Bonus> b_iter = bonus.iterator(); //bonus process
+		while(b_iter.hasNext()){
+			Bonus b = b_iter.next();
+			b.proceed();
+			
+			if(!b.isAlive()){ // If move to end display
+				b_iter.remove();  // remove
+				gp.sprites.remove(b); //remove
+			}
+
+			er = b.getRectangle(); //check clash?
+			if(er.intersects(vr)){
+				gp.sprites.remove(b); //clash and remove
+				b_iter.remove();
+				score += 999; 
+			}
+				
+				
+
+		}
 	}
 
 		public void die(){
@@ -92,10 +124,10 @@ public class GameEngine implements KeyListener, GameReporter{
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			v.moveX(-1);
+			v.moveX(-2);
 			break;
 		case KeyEvent.VK_RIGHT:
-			v.moveX(1);
+			v.moveX(2);
 			break;
 		}
 	}
