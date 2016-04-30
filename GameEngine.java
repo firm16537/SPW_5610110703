@@ -2,12 +2,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import java.util.Scanner;
+import java.awt.geom.Rectangle2D;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
-
+import java.io.*;
+import java.lang.*;
 
 public class GameEngine implements KeyListener, GameReporter{
 	
@@ -17,9 +19,11 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Bonus> bonus = new ArrayList<Bonus>(); 
 	private SpaceShip v;	
 	private Timer timer;
-	private double difficulty = 0.3;
+	private double difficulty = 0.1;
 	private double bonusx = 0.01; // Set Bonus
 	private long score = 0;
+
+
 
 	private int life = 3;
 	
@@ -68,11 +72,38 @@ public class GameEngine implements KeyListener, GameReporter{
 		while(e_iter.hasNext()){
 			Enemy e = e_iter.next();
 			e.proceed();
-			
-			if(!e.isAlive()){
+
+			if(score >= 5000 && score < 10000){
+				difficulty = 0.2;
+			}
+			if(score >= 10000 && score < 15000){
+				difficulty = 0.3;
+			}
+			if(score >= 15000 && score < 20000){
+				difficulty = 0.4;
+			}
+			if(score >= 20000 && score < 30000){
+				difficulty = 0.5;
+			}
+			if(score >= 3000 && score < 45000){
+				difficulty = 0.6;
+			}
+			if(score >= 45000 && score < 60000){
+				difficulty = 0.7;
+			}
+			if(score >= 60000 && score < 850000){
+				difficulty = 0.8;
+			}
+			if(score >= 85000 ){
+				difficulty = 0.99;
+			}
+				
+  
+
+				if(!e.isAlive()){
 				e_iter.remove();
 				gp.sprites.remove(e);
-				score += 112;
+				score += 100;
 			}
 		}
 
@@ -109,15 +140,21 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(er.intersects(vr)){
 				gp.sprites.remove(b); //clash and remove
 				b_iter.remove();
-				score += 999; 
+				score += 1000; 
 			}
-				
-				
-
-		}
+		}				
 	}
 
-		public void die(){
+	public void die(){
+		if(score <= 1000){
+			JOptionPane.showMessageDialog("You score :" + score + "Score" );
+		}
+		if(score >= 10000 && score < 40000){ 
+			JOptionPane.showMessageDialog("You score :" + score + "Score");
+		}
+		else
+			JOptionPane.showMessageDialog("You score :" + score + "Score");
+
 		timer.stop();
 	}
 	
